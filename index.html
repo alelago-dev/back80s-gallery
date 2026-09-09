@@ -3,62 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#07070b" />
+  <meta name="theme-color" content="#050507" />
   <meta name="description" content="Fotos de la Back to the 80s · Sábado 5 de septiembre de 2026 · Teatro Vorterix" />
   <title>Fotos | Back to the 80s</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#/" aria-label="Back to the 80s Photo Archive">
+    <a class="brand" href="#/">
       <span class="brand-kicker">BACK TO THE</span>
       <span class="brand-80">80s</span>
       <span class="brand-tag">PHOTO ARCHIVE</span>
     </a>
-    <a class="ghost-button" href="#/">Todas las fechas</a>
+    <a class="ghost-button" href="#/">← Volver al VHS</a>
   </header>
 
   <main>
-    <section id="homeView" class="view">
-      <div class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">FOTOS DE LA BACK TO THE 80S</p>
-          <h1>BUSCATE, SUBÍ LA FOTO<br><span>A TU IG/FB Y ETIQUETANOS!</span></h1>
-          <p class="hero-text">Reviví la noche del sábado 5 de septiembre de 2026, o de 1985 ;)</p>
+    <section id="homeView" class="vcr-home">
+      <button id="insertTape" class="vcr-machine" type="button" aria-label="Insertar VHS y ver las fotos">
+        <div class="machine-topline">
+          <span>BACK TO THE 80s · VIDEO CASSETTE</span>
+          <span id="machineStatus" class="rec-led">● STANDBY</span>
         </div>
 
-        <a class="hero-vhs-machine" href="#/2026-09-05-vorterix" aria-label="Reproducir archivo de fotos del sábado 5 de septiembre">
-          <div class="machine-topline"><span>BACK TO THE 80s · VIDEO CASSETTE</span><span class="rec-led">● PLAY</span></div>
-          <div class="hero-tape-shell">
-            <img src="./assets/vhs-sep05.webp" alt="VHS Back to the 80s · Sábado 5 de septiembre · Teatro Vorterix" />
+        <div class="tape-bay">
+          <div class="slot-glow"></div>
+          <div class="slot-mouth"><span>INSERT TAPE</span></div>
+          <div class="tape-card">
+            <img src="./assets/vhs-sep05.webp" alt="Back to the 80s · sábado 5 de septiembre de 2026 · Teatro Vorterix" />
             <div class="tape-glare"></div>
           </div>
-          <div class="machine-controls">
-            <div><b>PHOTO ARCHIVE</b><span>205 FOTOS · TEATRO VORTERIX</span></div>
-            <div class="play-control">▶ INSERT TAPE / VER FOTOS</div>
-          </div>
-          <div class="machine-footer"><span>PLAY IT LOUD</span><span>STEREO · HI-FI · 1985 MODE</span></div>
-        </a>
-      </div>
-
-      <section class="archive-section">
-        <div class="section-heading">
-          <div><p class="eyebrow">SELECCIONÁ UNA FECHA</p><h2>EL ARCHIVO</h2></div>
-          <span class="counter" id="eventCounter"></span>
         </div>
-        <div id="eventGrid" class="event-grid"></div>
-      </section>
+
+        <div class="machine-controls">
+          <div class="archive-label"><b>PHOTO ARCHIVE</b><span>205 FOTOS · TEATRO VORTERIX</span></div>
+          <div id="playControl" class="play-control">▶ TOCÁ EL VHS / INSERT TAPE</div>
+        </div>
+
+        <div class="machine-footer">
+          <span>PLAY IT LOUD</span>
+          <span>STEREO · HI-FI · 1985 MODE</span>
+        </div>
+      </button>
     </section>
 
     <section id="galleryView" class="view hidden">
       <div class="gallery-header">
-        <a href="#/" class="back-link">← Volver al archivo</a>
+        <a href="#/" class="back-link">← Sacar VHS</a>
         <p class="eyebrow" id="galleryEyebrow"></p>
         <h1 id="galleryTitle"></h1>
         <p class="gallery-subtitle" id="gallerySubtitle"></p>
         <div class="gallery-meta"><span id="photoCount"></span><span>·</span><span>Tocá una foto para verla grande</span></div>
       </div>
-      <div id="galleryStatus" class="status-card"><strong>La cinta está lista.</strong><span>Todavía no hay fotos cargadas para esta fecha.</span></div>
+      <div id="galleryStatus" class="status-card"><strong>La cinta está lista.</strong><span>Cargando fotos…</span></div>
       <div id="photoGrid" class="photo-grid"></div>
       <aside class="next-party"><div><p class="eyebrow">NEXT EPISODE</p><h3>BACK TO THE 80s · HALLOWEEN</h3><p>3 de octubre · Teatro Vorterix</p></div><span class="next-badge">🎃</span></aside>
     </section>
@@ -76,7 +73,6 @@
     <button class="lightbox-nav next" id="nextPhoto" aria-label="Foto siguiente">›</button>
   </dialog>
 
-  <script src="./photos.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
