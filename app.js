@@ -1,9 +1,16 @@
-const data=[{slug:'2026-09-05-vorterix',date:'05 SEP 2026',title:'VORTERIX · SEPTIEMBRE',venue:'Teatro Vorterix · Buenos Aires'}];
-const home=document.querySelector('#homeView');
-const gallery=document.querySelector('#galleryView');
-const grid=document.querySelector('#eventGrid');
-const photos=document.querySelector('#photoGrid');
-function events(){document.querySelector('#eventCounter').textContent='1 FECHA';grid.innerHTML=data.map(x=>'<a class="event-card" href="#/'+x.slug+'"><div class="event-card-content"><span class="event-date">'+x.date+'</span><h3>'+x.title+'</h3><p>'+x.venue+'</p></div></a>').join('')}
-function openGallery(slug){const e=data.find(x=>x.slug===slug);if(!e)return;home.classList.add('hidden');gallery.classList.remove('hidden');document.querySelector('#galleryEyebrow').textContent=e.date;document.querySelector('#galleryTitle').textContent=e.title;document.querySelector('#gallerySubtitle').textContent=e.venue;const list=(window.BACK80S_PHOTOS||{})[slug]||[];document.querySelector('#photoCount').textContent=list.length+' FOTOS';document.querySelector('#galleryStatus').classList.toggle('hidden',list.length>0);photos.innerHTML=list.map((p,i)=>'<a class="photo-card" href="'+p.url+'" target="_blank"><img src="'+p.url+'" loading="lazy" alt="Foto '+(i+1)+'"></a>').join('')}
+const SUPA='https://ieuamsitzobqczpbwzze.supabase.co';
+const KEY='sb_publishable_1-wlpnr0dj0ZMMCy_u4fPg_q0AAOUvt';
+const BUCKET='event-photos';
+const data=[{slug:'2026-09-05-vorterix',date:'05 SEP 2026',title:'VORTERIX · SEPTIEMBRE',venue:'Teatro Vorterix · Buenos Aires',prefix:''}];
+const $=s=>document.querySelector(s),home=$('#homeView'),gallery=$('#galleryView'),grid=$('#eventGrid'),photos=$('#photoGrid'),box=$('#lightbox'),boxImg=$('#lightboxImage');
+let current=[],pos=0;
+function events(){$('#eventCounter').textContent=data.length+' FECHA';grid.innerHTML=data.map(x=>`<a class="event-card" href="#/${x.slug}"><div class="event-card-content"><span class="event-date">${x.date}</span><h3>${x.title}</h3><p>${x.venue}</p></div></a>`).join('')}
+const publicUrl=name=>SUPA+'/storage/v1/object/public/'+BUCKET+'/'+name.split('/').map(encodeURIComponent).join('/');
+async function load(prefix){const r=await fetch(SUPA+'/storage/v1/object/list/'+BUCKET,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({prefix,limit:1000,offset:0,sortBy:{column:'name',order:'asc'}})});if(!r.ok)throw Error('No se pudieron cargar las fotos');const list=await r.json();return list.filter(x=>x.name&&!x.name.startsWith('.')&&/\.(jpe?g|png|webp)$/i.test(x.name)).sort((a,b)=>{const na=+(a.name.match(/\((\d+)\s+de/i)||[])[1]||0,nb=+(b.name.match(/\((\d+)\s+de/i)||[])[1]||0;return na-nb||a.name.localeCompare(b.name)}).map(x=>({name:x.name,url:publicUrl(prefix+x.name)}))}
+async function openGallery(slug){const e=data.find(x=>x.slug===slug);if(!e)return;home.classList.add('hidden');gallery.classList.remove('hidden');$('#galleryEyebrow').textContent=e.date;$('#galleryTitle').textContent=e.title;$('#gallerySubtitle').textContent=e.venue;$('#galleryStatus').classList.remove('hidden');$('#galleryStatus').innerHTML='<strong>Rebobinando la cinta…</strong><br><span>Estamos cargando las fotos.</span>';photos.innerHTML='';try{current=await load(e.prefix);$('#photoCount').textContent=current.length+' FOTOS';$('#galleryStatus').classList.add('hidden');photos.innerHTML=current.map((p,i)=>`<a class="photo-card" href="${p.url}" data-i="${i}"><img src="${p.url}" loading="lazy" alt="Foto ${i+1}"></a>`).join('')}catch(err){$('#galleryStatus').innerHTML='<strong>Ups.</strong><br><span>'+err.message+'</span>'}}
+function show(i){if(!current.length)return;pos=(i+current.length)%current.length;boxImg.src=current[pos].url;$('#lightboxNumber').textContent=(pos+1)+' / '+current.length;box.showModal()}
+photos.addEventListener('click',e=>{const a=e.target.closest('.photo-card');if(!a)return;e.preventDefault();show(+a.dataset.i)});
+$('#closeLightbox').onclick=()=>box.close();$('#prevPhoto').onclick=()=>show(pos-1);$('#nextPhoto').onclick=()=>show(pos+1);$('#downloadPhoto').onclick=async()=>{const p=current[pos];const b=await fetch(p.url).then(r=>r.blob());const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=p.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+document.addEventListener('keydown',e=>{if(!box.open)return;if(e.key==='ArrowLeft')show(pos-1);if(e.key==='ArrowRight')show(pos+1)});
 function route(){const slug=location.hash.replace('#/','');if(!slug){gallery.classList.add('hidden');home.classList.remove('hidden')}else openGallery(slug)}
 window.addEventListener('hashchange',route);events();route();
