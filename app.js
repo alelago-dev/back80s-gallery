@@ -20,7 +20,7 @@ function resetMachine(){
   inserting=false;
   machine.classList.remove('inserting','playing');
   machineStatus.textContent='● STANDBY';
-  playControl.textContent='▶ TOCÁ EL VHS / INSERT TAPE';
+  playControl.textContent='▶ TOCÁ EL VIDEOCASSETTE';
 }
 
 function insertTape(){
@@ -28,7 +28,7 @@ function insertTape(){
   inserting=true;
   machine.classList.add('inserting');
   machineStatus.textContent='● INSERTING';
-  playControl.textContent='INSERTANDO VHS…';
+  playControl.textContent='INSERTANDO CASSETTE…';
   setTimeout(()=>{
     machine.classList.add('playing');
     machineStatus.textContent='● PLAY';
@@ -42,7 +42,10 @@ async function openGallery(slug){
   const e=data.find(x=>x.slug===slug);if(!e)return;
   document.body.classList.add('gallery-mode');
   home.classList.add('hidden');gallery.classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'});
-  $('#galleryEyebrow').textContent='▶ PLAYING · '+e.shortDate;$('#galleryTitle').textContent=e.title;$('#gallerySubtitle').textContent=e.date+' · '+e.venue;
+  $('#galleryEyebrow').textContent='▶ PLAYING · '+e.shortDate;
+  $('#galleryTitle').textContent=e.title;
+  $('#galleryTitle').dataset.text=e.title.toUpperCase();
+  $('#gallerySubtitle').textContent=e.date+' · '+e.venue;
   $('#galleryStatus').classList.remove('hidden');$('#galleryStatus').innerHTML='<strong>REW ◀◀ Rebobinando la cinta…</strong><br><span>Estamos cargando las fotos.</span>';photos.innerHTML='';
   try{current=await load(e);$('#photoCount').textContent=current.length+' FOTOS';$('#galleryStatus').classList.add('hidden');photos.innerHTML=current.map((p,i)=>`<a class="photo-card" href="${p.url}" data-i="${i}"><img src="${p.url}" loading="lazy" alt="Back to the 80s · foto ${i+1}"><span>${String(i+1).padStart(3,'0')}</span></a>`).join('')}catch(err){$('#galleryStatus').innerHTML='<strong>Ups.</strong><br><span>'+err.message+'</span>'}
 }
