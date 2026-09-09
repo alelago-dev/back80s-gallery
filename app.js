@@ -1,21 +1,24 @@
 const SUPA='https://ieuamsitzobqczpbwzze.supabase.co';
 const KEY='sb_publishable_1-wlpnr0dj0ZMMCy_u4fPg_q0AAOUvt';
 const BUCKET='event-photos';
-const data=[{slug:'2026-09-05-vorterix',date:'05 SEP 2026',title:'VORTERIX · SEPTIEMBRE',venue:'Teatro Vorterix · Buenos Aires',prefix:'2026-09-05-vorterix/',fallback:''}];
+const data=[{slug:'2026-09-05-vorterix',date:'SÁBADO 5 DE SEPTIEMBRE · 2026',shortDate:'05 SEP 2026',title:'BACK TO THE 80s',venue:'TEATRO VORTERIX · BUENOS AIRES',prefix:'2026-09-05-vorterix/',fallback:'',cover:'./assets/vhs-sep05.webp',count:205}];
 const $=s=>document.querySelector(s),home=$('#homeView'),gallery=$('#galleryView'),grid=$('#eventGrid'),photos=$('#photoGrid'),box=$('#lightbox'),boxImg=$('#lightboxImage');
 let current=[],pos=0;
 function events(){
   $('#eventCounter').textContent=data.length+' FECHA';
-  grid.innerHTML=data.map(x=>`<a class="event-card vhs-tape" href="#/${x.slug}">
-    <div class="vhs-top"><span>BACK TO THE 80s</span><span>SP</span></div>
-    <div class="vhs-window"><i></i><i></i><b>PHOTO ARCHIVE</b></div>
-    <div class="vhs-sticker">
+  grid.innerHTML=data.map(x=>`<a class="event-card vhs-case" href="#/${x.slug}" aria-label="Abrir fotos de ${x.date}">
+    <div class="vhs-cover-wrap">
+      <img class="vhs-cover-art" src="${x.cover}" alt="Carátula VHS Back to the 80s - ${x.date}">
+      <span class="vhs-play">▶ PLAY</span>
+      <span class="vhs-copy">COPIA Nº 001</span>
+    </div>
+    <div class="vhs-case-info">
       <span class="event-date">${x.date}</span>
       <h3>${x.title}</h3>
       <p>${x.venue}</p>
-      <small>▶ PLAY · VER ${x.slug==='2026-09-05-vorterix'?'205':'TODAS'} FOTOS</small>
+      <div class="tape-meta"><span>PHOTO ARCHIVE</span><b>${x.count} FOTOS</b></div>
+      <span class="open-archive">INSERT TAPE → VER FOTOS</span>
     </div>
-    <div class="vhs-bottom"><span>80s HOME VIDEO</span><span>HQ</span></div>
   </a>`).join('')
 }
 const publicUrl=name=>SUPA+'/storage/v1/object/public/'+BUCKET+'/'+name.split('/').map(encodeURIComponent).join('/');
@@ -28,14 +31,14 @@ async function listPrefix(prefix){
 async function load(e){let list=await listPrefix(e.prefix);if(!list.length&&e.fallback!==undefined)list=await listPrefix(e.fallback);return list}
 async function openGallery(slug){
   const e=data.find(x=>x.slug===slug);if(!e)return;
-  home.classList.add('hidden');gallery.classList.remove('hidden');
-  $('#galleryEyebrow').textContent='▶ PLAYING · '+e.date;$('#galleryTitle').textContent=e.title;$('#gallerySubtitle').textContent=e.venue;
+  home.classList.add('hidden');gallery.classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'});
+  $('#galleryEyebrow').textContent='▶ PLAYING · '+e.shortDate;$('#galleryTitle').textContent=e.title;$('#gallerySubtitle').textContent=e.date+' · '+e.venue;
   $('#galleryStatus').classList.remove('hidden');$('#galleryStatus').innerHTML='<strong>REW ◀◀ Rebobinando la cinta…</strong><br><span>Estamos cargando las fotos.</span>';photos.innerHTML='';
-  try{current=await load(e);$('#photoCount').textContent=current.length+' FOTOS';$('#galleryStatus').classList.add('hidden');photos.innerHTML=current.map((p,i)=>`<a class="photo-card" href="${p.url}" data-i="${i}"><img src="${p.url}" loading="lazy" alt="Foto ${i+1}"><span>${String(i+1).padStart(3,'0')}</span></a>`).join('')}catch(err){$('#galleryStatus').innerHTML='<strong>Ups.</strong><br><span>'+err.message+'</span>'}
+  try{current=await load(e);$('#photoCount').textContent=current.length+' FOTOS';$('#galleryStatus').classList.add('hidden');photos.innerHTML=current.map((p,i)=>`<a class="photo-card" href="${p.url}" data-i="${i}"><img src="${p.url}" loading="lazy" alt="Back to the 80s · foto ${i+1}"><span>${String(i+1).padStart(3,'0')}</span></a>`).join('')}catch(err){$('#galleryStatus').innerHTML='<strong>Ups.</strong><br><span>'+err.message+'</span>'}
 }
 function show(i){if(!current.length)return;pos=(i+current.length)%current.length;boxImg.src=current[pos].url;$('#lightboxNumber').textContent='PLAY  '+(pos+1)+' / '+current.length;box.showModal()}
 photos.addEventListener('click',e=>{const a=e.target.closest('.photo-card');if(!a)return;e.preventDefault();show(+a.dataset.i)});
 $('#closeLightbox').onclick=()=>box.close();$('#prevPhoto').onclick=()=>show(pos-1);$('#nextPhoto').onclick=()=>show(pos+1);$('#downloadPhoto').onclick=async()=>{const p=current[pos];const b=await fetch(p.url).then(r=>r.blob());const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=p.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-document.addEventListener('keydown',e=>{if(!box.open)return;if(e.key==='ArrowLeft')show(pos-1);if(e.key==='ArrowRight')show(pos+1)});
+document.addEventListener('keydown',e=>{if(!box.open)return;if(e.key==='ArrowLeft')show(pos-1);if(e.key==='ArrowRight')show(pos+1);if(e.key==='Escape')box.close()});
 function route(){const slug=location.hash.replace('#/','');if(!slug){gallery.classList.add('hidden');home.classList.remove('hidden')}else openGallery(slug)}
 window.addEventListener('hashchange',route);events();route();
