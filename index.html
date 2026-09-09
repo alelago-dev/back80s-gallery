@@ -10,7 +10,7 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#/">
+    <a class="brand" href="#/" aria-label="Back to the 80s Photo Archive">
       <span class="brand-kicker">BACK TO THE</span>
       <span class="brand-80">80s</span>
       <span class="brand-tag">PHOTO ARCHIVE</span>
@@ -26,13 +26,17 @@
           <h1>BUSCATE.<br><span>ESTUVISTE AHÍ.</span></h1>
           <p class="hero-text">Reviví la noche, encontrá tu foto y descargala. Porque una buena fiesta merece quedar archivada.</p>
         </div>
-        <div class="hero-vhs">
+        <div class="hero-vhs" aria-hidden="true">
           <div class="vhs-spine">BACK TO THE 80s</div>
           <div class="vhs-label"><span>VIDEO CASSETTE</span><strong>PHOTO<br>ARCHIVE</strong><small>PLAY IT LOUD</small></div>
         </div>
       </div>
+
       <section class="archive-section">
-        <div class="section-heading"><div><p class="eyebrow">SELECCIONÁ UNA FECHA</p><h2>EL ARCHIVO</h2></div><span class="counter" id="eventCounter"></span></div>
+        <div class="section-heading">
+          <div><p class="eyebrow">SELECCIONÁ UNA FECHA</p><h2>EL ARCHIVO</h2></div>
+          <span class="counter" id="eventCounter"></span>
+        </div>
         <div id="eventGrid" class="event-grid"></div>
       </section>
     </section>
@@ -52,6 +56,17 @@
   </main>
 
   <footer><span>BACK TO THE 80s</span><span>LA MEJOR FIESTA 80s DE LATINOAMÉRICA</span></footer>
+
+  <dialog id="lightbox" class="lightbox">
+    <button class="lightbox-close" id="closeLightbox" aria-label="Cerrar">×</button>
+    <button class="lightbox-nav prev" id="prevPhoto" aria-label="Foto anterior">‹</button>
+    <figure>
+      <img id="lightboxImage" alt="Foto de Back to the 80s" />
+      <figcaption><span id="lightboxNumber"></span><button id="downloadPhoto" class="download-button">↓ Descargar foto</button></figcaption>
+    </figure>
+    <button class="lightbox-nav next" id="nextPhoto" aria-label="Foto siguiente">›</button>
+  </dialog>
+
   <script src="./photos.js"></script>
   <script src="./app.js"></script>
 </body>
