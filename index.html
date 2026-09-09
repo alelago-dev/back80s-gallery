@@ -11,7 +11,7 @@
 <body>
   <header class="topbar">
     <a class="brand brand-logo" href="#/" aria-label="Back to the 80s Photo Archive">
-      <img src="./assets/back80s-logo.webp" alt="Back to the 80s" />
+      <img id="galleryLogo" data-b64="./assets/back80s-logo-original.b64" alt="Back to the 80s" />
       <span class="brand-tag">PHOTO ARCHIVE</span>
     </a>
     <a class="ghost-button" href="#/">← Volver al VHS</a>
@@ -26,9 +26,8 @@
         </div>
 
         <div class="tape-bay">
-          <div class="cover-display">
-            <img src="./assets/vhs-sep05.webp" alt="Back to the 80s · sábado 5 de septiembre de 2026 · Teatro Vorterix" />
-            <span class="cover-caption">SÁBADO 5 SEP 2026 · TEATRO VORTERIX</span>
+          <div class="cover-display" aria-hidden="true">
+            <img id="coverArt" data-b64="./assets/vhs-sep05-hq.b64" alt="Back to the 80s · VHS · Teatro Vorterix" />
           </div>
 
           <div class="slot-glow"></div>
@@ -38,7 +37,9 @@
             <div class="cassette-top"><span>BACK TO THE 80s</span><span>VHS · HI-FI</span></div>
             <div class="cassette-window">
               <i class="reel reel-left"></i>
-              <div class="cassette-label"><b>PHOTO ARCHIVE</b><span>05·09·2026 · VORTERIX</span></div>
+              <div class="cassette-label cassette-label-original">
+                <img id="pirateLabel" data-b64="./assets/vhs-pirate-label.b64" alt="Etiqueta VHS original" />
+              </div>
               <i class="reel reel-right"></i>
             </div>
             <div class="cassette-bottom"><span>PLAY IT LOUD</span><span>80s HOME VIDEO</span></div>
@@ -46,7 +47,7 @@
         </div>
 
         <div class="machine-controls">
-          <div class="archive-label"><b>PHOTO ARCHIVE</b><span>205 FOTOS · TEATRO VORTERIX</span></div>
+          <div class="archive-label"><b>05·09·2026</b><span>205 FOTOS · TEATRO VORTERIX</span></div>
           <div id="playControl" class="play-control">▶ TOCÁ EL VIDEOCASSETTE</div>
         </div>
 
