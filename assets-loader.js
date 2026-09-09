@@ -1,0 +1,1 @@
+(async()=>{const imgs=[...document.querySelectorAll('img[data-b64]')];await Promise.allSettled(imgs.map(async img=>{const r=await fetch(img.dataset.b64,{cache:'force-cache'});if(!r.ok)throw new Error('asset');const b64=(await r.text()).replace(/\s+/g,'');img.src='data:image/webp;base64,'+b64;img.removeAttribute('data-b64')}))})();
