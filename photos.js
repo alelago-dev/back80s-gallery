@@ -1,0 +1,1 @@
+window.BACK80S_PHOTOS = {};
