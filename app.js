@@ -4,7 +4,7 @@ const BUCKET='event-photos';
 const data=[{slug:'2026-09-05-vorterix',date:'SÁBADO 5 DE SEPTIEMBRE · 2026',shortDate:'05 SEP 2026',title:'BACK TO THE 80s',venue:'TEATRO VORTERIX · BUENOS AIRES',prefix:'2026-09-05-vorterix/',fallback:'',count:205}];
 const $=s=>document.querySelector(s);
 const home=$('#homeView'),gallery=$('#galleryView'),photos=$('#photoGrid'),box=$('#lightbox'),boxImg=$('#lightboxImage');
-const machine=$('#insertTape'),machineStatus=$('#machineStatus'),playControl=$('#playControl');
+const machine=$('#insertTape'),machineStatus=$('#machineStatus'),playControl=$('#playControl'),insertVideo=$('#insertVideo');
 let current=[],pos=0,inserting=false;
 
 const publicUrl=name=>SUPA+'/storage/v1/object/public/'+BUCKET+'/'+name.split('/').map(encodeURIComponent).join('/');
@@ -21,6 +21,8 @@ function resetMachine(){
   machine.classList.remove('inserting','playing');
   machineStatus.textContent='● STANDBY';
   playControl.textContent='▶ TOCÁ EL VIDEOCASSETTE';
+  insertVideo.pause();
+  insertVideo.currentTime=0;
 }
 
 function insertTape(){
@@ -29,12 +31,20 @@ function insertTape(){
   machine.classList.add('inserting');
   machineStatus.textContent='● INSERTING';
   playControl.textContent='INSERTANDO CASSETTE…';
-  setTimeout(()=>{
+  let done=false;
+  const goPlay=()=>{
+    if(done)return;done=true;
+    insertVideo.removeEventListener('ended',goPlay);
+    clearTimeout(safety);
     machine.classList.add('playing');
     machineStatus.textContent='● PLAY';
     playControl.textContent='▶ PLAY';
-  },900);
-  setTimeout(()=>{location.hash='/2026-09-05-vorterix'},1450);
+    setTimeout(()=>{location.hash='/2026-09-05-vorterix'},350);
+  };
+  insertVideo.addEventListener('ended',goPlay);
+  insertVideo.currentTime=0;
+  insertVideo.play().catch(goPlay);
+  const safety=setTimeout(goPlay,1600);
 }
 machine.addEventListener('click',insertTape);
 
