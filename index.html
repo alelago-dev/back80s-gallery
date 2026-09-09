@@ -9,10 +9,8 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-
   <header class="topbar">
-    <a class="brand" href="#/" aria-label="Back to the 80s - Fotos">
+    <a class="brand" href="#/">
       <span class="brand-kicker">BACK TO THE</span>
       <span class="brand-80">80s</span>
       <span class="brand-tag">PHOTO ARCHIVE</span>
@@ -26,26 +24,15 @@
         <div class="hero-copy">
           <p class="eyebrow">FOTOS OFICIALES · ARCHIVO DE FIESTAS</p>
           <h1>BUSCATE.<br><span>ESTUVISTE AHÍ.</span></h1>
-          <p class="hero-text">Revivi la noche, encontrá tu foto y descargala. Porque una buena fiesta merece quedar archivada.</p>
+          <p class="hero-text">Reviví la noche, encontrá tu foto y descargala. Porque una buena fiesta merece quedar archivada.</p>
         </div>
-        <div class="hero-vhs" aria-hidden="true">
+        <div class="hero-vhs">
           <div class="vhs-spine">BACK TO THE 80s</div>
-          <div class="vhs-label">
-            <span>VIDEO CASSETTE</span>
-            <strong>PHOTO<br>ARCHIVE</strong>
-            <small>PLAY IT LOUD</small>
-          </div>
+          <div class="vhs-label"><span>VIDEO CASSETTE</span><strong>PHOTO<br>ARCHIVE</strong><small>PLAY IT LOUD</small></div>
         </div>
       </div>
-
       <section class="archive-section">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">SELECCIONÁ UNA FECHA</p>
-            <h2>EL ARCHIVO</h2>
-          </div>
-          <span class="counter" id="eventCounter"></span>
-        </div>
+        <div class="section-heading"><div><p class="eyebrow">SELECCIONÁ UNA FECHA</p><h2>EL ARCHIVO</h2></div><span class="counter" id="eventCounter"></span></div>
         <div id="eventGrid" class="event-grid"></div>
       </section>
     </section>
@@ -56,50 +43,16 @@
         <p class="eyebrow" id="galleryEyebrow"></p>
         <h1 id="galleryTitle"></h1>
         <p class="gallery-subtitle" id="gallerySubtitle"></p>
-        <div class="gallery-meta">
-          <span id="photoCount">Cargando fotos…</span>
-          <span>·</span>
-          <span>Tocá una foto para verla grande</span>
-        </div>
+        <div class="gallery-meta"><span id="photoCount"></span><span>·</span><span>Tocá una foto para verla grande</span></div>
       </div>
-
-      <div id="galleryStatus" class="status-card">
-        <div class="loader" aria-hidden="true"></div>
-        <strong>Rebobinando la cinta…</strong>
-        <span>Estamos cargando las fotos.</span>
-      </div>
-
-      <div id="photoGrid" class="photo-grid" aria-live="polite"></div>
-
-      <aside class="next-party">
-        <div>
-          <p class="eyebrow">NEXT EPISODE</p>
-          <h3>BACK TO THE 80s · HALLOWEEN</h3>
-          <p>3 de octubre · Teatro Vorterix</p>
-        </div>
-        <span class="next-badge">🎃</span>
-      </aside>
+      <div id="galleryStatus" class="status-card"><strong>La cinta está lista.</strong><span>Todavía no hay fotos cargadas para esta fecha.</span></div>
+      <div id="photoGrid" class="photo-grid"></div>
+      <aside class="next-party"><div><p class="eyebrow">NEXT EPISODE</p><h3>BACK TO THE 80s · HALLOWEEN</h3><p>3 de octubre · Teatro Vorterix</p></div><span class="next-badge">🎃</span></aside>
     </section>
   </main>
 
-  <footer>
-    <span>BACK TO THE 80s</span>
-    <span>LA MEJOR FIESTA 80s DE LATINOAMÉRICA</span>
-  </footer>
-
-  <dialog id="lightbox" class="lightbox">
-    <button class="lightbox-close" id="closeLightbox" aria-label="Cerrar">×</button>
-    <button class="lightbox-nav prev" id="prevPhoto" aria-label="Foto anterior">‹</button>
-    <figure>
-      <img id="lightboxImage" alt="Foto de Back to the 80s" />
-      <figcaption>
-        <span id="lightboxNumber"></span>
-        <button id="downloadPhoto" class="download-button">↓ Descargar foto</button>
-      </figcaption>
-    </figure>
-    <button class="lightbox-nav next" id="nextPhoto" aria-label="Foto siguiente">›</button>
-  </dialog>
-
-  <script type="module" src="./app.js"></script>
+  <footer><span>BACK TO THE 80s</span><span>LA MEJOR FIESTA 80s DE LATINOAMÉRICA</span></footer>
+  <script src="./photos.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
