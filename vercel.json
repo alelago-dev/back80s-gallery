@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/photos/:path*",
-      "destination": "https://ieuamsitzobqczpbwzze.supabase.co/storage/v1/object/public/event-photos/:path*"
+      "destination": "https://gallery.back2the80s.com/:path*"
     }
   ],
   "headers": [
