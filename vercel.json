@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/photos/:path*",
+      "destination": "https://ieuamsitzobqczpbwzze.supabase.co/storage/v1/object/public/event-photos/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/photos/:path*",
+      "headers": [
+        { "key": "x-vercel-enable-rewrite-caching", "value": "1" },
+        { "key": "CDN-Cache-Control", "value": "max-age=31536000" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}
