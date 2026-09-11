@@ -7,7 +7,7 @@ const home=$('#homeView'),gallery=$('#galleryView'),photos=$('#photoGrid'),box=$
 const machine=$('#insertTape'),machineStatus=$('#machineStatus'),playControl=$('#playControl'),insertVideo=$('#insertVideo');
 let current=[],pos=0,inserting=false;
 
-const publicUrl=name=>SUPA+'/storage/v1/object/public/'+BUCKET+'/'+name.split('/').map(encodeURIComponent).join('/');
+const publicUrl=name=>'/photos/'+name.split('/').map(encodeURIComponent).join('/');
 async function listPrefix(prefix){
   const r=await fetch(SUPA+'/storage/v1/object/list/'+BUCKET,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({prefix,limit:1000,offset:0,sortBy:{column:'name',order:'asc'}})});
   if(!r.ok)throw Error('No se pudieron cargar las fotos');
