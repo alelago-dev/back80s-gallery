@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/photos/:path*",
-      "destination": "https://gallery.back2the80s.com/:path*"
+      "destination": "https://pub-1036c8427b654e5e900cbfb6f0bedbbe.r2.dev/:path*"
     }
   ],
   "headers": [
