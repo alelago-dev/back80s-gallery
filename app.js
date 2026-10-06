@@ -4,8 +4,7 @@ const data=[
 ];
 const $=s=>document.querySelector(s);
 const home=$('#homeView'),gallery=$('#galleryView'),photos=$('#photoGrid'),box=$('#lightbox'),boxImg=$('#lightboxImage');
-const machine=$('#insertTape'),machineStatus=$('#machineStatus'),playControl=$('#playControl'),insertVideo=$('#insertVideo');
-let current=[],pos=0,inserting=false,selected=data[0],routeVersion=0,playTimer;
+let current=[],pos=0,routeVersion=0;
 
 const publicUrl=name=>'/photos/'+name.split('/').map(encodeURIComponent).join('/');
 async function load(e){
@@ -15,53 +14,6 @@ async function load(e){
   if(!Array.isArray(list)||list.length!==e.count||new Set(list).size!==e.count||list.some(name=>typeof name!=='string'||name.includes('/')||! /\.(jpe?g|png|webp)$/i.test(name)))throw Error('El listado de fotos no está disponible');
   return list.map(name=>({name,url:publicUrl(e.slug+'/'+name)}));
 }
-
-function selectAlbum(slug){
-  if(inserting)return;
-  selected=data.find(e=>e.slug===slug)||data[0];
-  $('#coverArt').src=selected.cover;
-  $('#coverArt').alt=selected.title+' · '+selected.shortDate;
-  machine.classList.toggle('halloween',selected===data[1]);
-  machine.setAttribute('aria-label','Insertar VHS y ver '+selected.title+' · '+selected.shortDate);
-  $('#archiveDate').textContent=selected.labelDate;
-  $('#archiveCount').textContent=selected.count+' FOTOS · TEATRO VORTERIX';
-  document.querySelectorAll('.album-choice').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.slug===selected.slug)));
-}
-document.querySelectorAll('.album-choice').forEach(button=>button.addEventListener('click',()=>selectAlbum(button.dataset.slug)));
-
-function resetMachine(){
-  inserting=false;
-  clearTimeout(playTimer);
-  machine.classList.remove('inserting','playing');
-  machineStatus.textContent='● STANDBY';
-  playControl.textContent='▶ TOCÁ EL VIDEOCASSETTE';
-  insertVideo.pause();
-  insertVideo.currentTime=0;
-}
-
-function insertTape(){
-  if(inserting)return;
-  inserting=true;
-  const slug=selected.slug;
-  machine.classList.add('inserting');
-  machineStatus.textContent='● INSERTING';
-  playControl.textContent='INSERTANDO CASSETTE…';
-  let done=false;
-  const goPlay=()=>{
-    if(done)return;done=true;
-    insertVideo.removeEventListener('ended',goPlay);
-    clearTimeout(safety);
-    machine.classList.add('playing');
-    machineStatus.textContent='● PLAY';
-    playControl.textContent='▶ PLAY';
-    playTimer=setTimeout(()=>{location.hash='/'+slug},350);
-  };
-  insertVideo.addEventListener('ended',goPlay);
-  insertVideo.currentTime=0;
-  insertVideo.play().catch(goPlay);
-  const safety=setTimeout(goPlay,1600);
-}
-machine.addEventListener('click',insertTape);
 
 async function openGallery(slug){
   const e=data.find(x=>x.slug===slug);if(!e)return;
@@ -85,7 +37,7 @@ document.addEventListener('keydown',e=>{if(!box.open)return;if(e.key==='ArrowLef
 function route(){
   if(box.open)box.close();
   const slug=location.hash.replace('#/','');
-  if(!slug||!data.some(e=>e.slug===slug)){++routeVersion;current=[];document.body.classList.remove('gallery-mode');gallery.classList.add('hidden');home.classList.remove('hidden');resetMachine();window.scrollTo({top:0,behavior:'instant'})}
+  if(!slug||!data.some(e=>e.slug===slug)){++routeVersion;current=[];document.body.classList.remove('gallery-mode');gallery.classList.add('hidden');home.classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'})}
   else openGallery(slug)
 }
-window.addEventListener('hashchange',route);selectAlbum(selected.slug);route();
+window.addEventListener('hashchange',route);route();

@@ -15,52 +15,41 @@
       <img id="galleryLogo" src="./assets/logo.png" alt="Back to the 80s" />
       <span class="brand-tag">PHOTO ARCHIVE</span>
     </a>
-    <a class="ghost-button" href="#/">← Volver al VHS</a>
+    <a class="ghost-button" href="#/">← Volver al videoclub</a>
   </header>
 
   <main>
-    <section id="homeView" class="vcr-home">
-      <nav class="album-shelf" aria-label="Elegí un videocassette">
-        <button class="album-choice" type="button" data-slug="2026-09-05-vorterix" aria-pressed="true">
-          <img src="./assets/cover.png" alt="Portada del álbum de septiembre" />
-          <span><b>BACK TO THE 80s</b><small>05 SEP 2026 · 205 FOTOS</small></span>
-        </button>
-        <button class="album-choice" type="button" data-slug="2026-10-03-vorterix" aria-pressed="false">
-          <img src="./assets/halloween-cover.jpg" alt="Flyer de Edición Halloween" />
-          <span><b>EDICIÓN HALLOWEEN</b><small>03 OCT 2026 · 149 FOTOS</small></span>
-        </button>
+    <section id="homeView" class="videoclub-home">
+      <div class="videoclub-heading">
+        <img src="./assets/logo.png" alt="Back to the 80s" />
+        <p class="videoclub-sign">VIDEOCLUB · PHOTO ARCHIVE</p>
+        <h1>Elegí tu videocassette</h1>
+        <p class="videoclub-hint">Tocá una tapa y reviví la fiesta.</p>
+      </div>
+      <nav class="tape-shelf" aria-label="Álbumes de fotos">
+        <a class="tape-item" href="#/2026-09-05-vorterix" aria-label="Ver Back to the 80s · 5 de septiembre 2026 · 205 fotos">
+          <div class="tape-case september-case">
+            <img src="./assets/cover.png" alt="Tapa VHS de Back to the 80s en Vorterix" />
+            <span class="tape-play" aria-hidden="true">▶ PLAY</span>
+          </div>
+          <div class="tape-caption"><h2>Back to the 80s</h2><time datetime="2026-09-05">5 de septiembre 2026</time><span>205 FOTOS · TEATRO VORTERIX</span></div>
+        </a>
+        <a class="tape-item" href="#/2026-10-03-vorterix" aria-label="Ver Back to the 80s — Edición Halloween · 3 de octubre 2026 · 149 fotos">
+          <div class="tape-case halloween-case">
+            <div class="case-format" aria-hidden="true"><b>VHS</b><span>HI-FI · STEREO</span></div>
+            <img src="./assets/halloween-cover.jpg" alt="Flyer de Back to the 80s — Edición Halloween" />
+            <div class="case-label" aria-hidden="true"><span>BACK TO THE 80s</span><b>EDICIÓN<br>HALLOWEEN</b><small>TEATRO VORTERIX · 2026</small></div>
+            <span class="tape-play" aria-hidden="true">▶ PLAY</span>
+          </div>
+          <div class="tape-caption"><h2>Edición Halloween</h2><time datetime="2026-10-03">3 de octubre 2026</time><span>149 FOTOS · TEATRO VORTERIX</span></div>
+        </a>
       </nav>
-      <button id="insertTape" class="vcr-machine" type="button" aria-label="Insertar VHS y ver las fotos">
-        <div class="machine-topline">
-          <span>BACK TO THE 80s · VIDEO CASSETTE</span>
-          <span id="machineStatus" class="rec-led">● STANDBY</span>
-        </div>
-
-        <div class="tape-bay">
-          <div class="cover-display" aria-hidden="true">
-            <img id="coverArt" src="./assets/cover.png" alt="Back to the 80s · VHS · Teatro Vorterix" />
-          </div>
-
-          <div class="video-frame" aria-hidden="true">
-            <video id="insertVideo" src="./assets/vhs-insert.mp4" poster="./assets/vhs-poster.jpg" muted playsinline preload="auto"></video>
-          </div>
-        </div>
-
-        <div class="machine-controls">
-          <div class="archive-label"><b id="archiveDate">05·09·2026</b><span id="archiveCount">205 FOTOS · TEATRO VORTERIX</span></div>
-          <div id="playControl" class="play-control">▶ TOCÁ EL VIDEOCASSETTE</div>
-        </div>
-
-        <div class="machine-footer">
-          <span>PLAY IT LOUD</span>
-          <span>STEREO · HI-FI · 1985 MODE</span>
-        </div>
-      </button>
+      <p class="shelf-note">BE KIND · REWIND</p>
     </section>
 
     <section id="galleryView" class="view hidden">
       <div class="gallery-header">
-        <a href="#/" class="back-link">← Sacar VHS</a>
+        <a href="#/" class="back-link">← Elegir otro cassette</a>
         <p class="eyebrow" id="galleryEyebrow"></p>
         <h1 id="galleryTitle" class="glitch-title" data-text="BACK TO THE 80S"></h1>
         <p class="gallery-subtitle" id="gallerySubtitle"></p>
