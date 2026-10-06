@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#050507" />
-  <meta name="description" content="Fotos de la Back to the 80s · Sábado 5 de septiembre de 2026 · Teatro Vorterix" />
+  <meta name="description" content="Fotos de Back to the 80s · 5 de septiembre y Edición Halloween · 3 de octubre 2026 · Teatro Vorterix" />
   <title>Fotos | Back to the 80s</title>
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./vhs-fixes.css" />
@@ -20,6 +20,16 @@
 
   <main>
     <section id="homeView" class="vcr-home">
+      <nav class="album-shelf" aria-label="Elegí un videocassette">
+        <button class="album-choice" type="button" data-slug="2026-09-05-vorterix" aria-pressed="true">
+          <img src="./assets/cover.png" alt="Portada del álbum de septiembre" />
+          <span><b>BACK TO THE 80s</b><small>05 SEP 2026 · 205 FOTOS</small></span>
+        </button>
+        <button class="album-choice" type="button" data-slug="2026-10-03-vorterix" aria-pressed="false">
+          <img src="./assets/halloween-cover.jpg" alt="Flyer de Edición Halloween" />
+          <span><b>EDICIÓN HALLOWEEN</b><small>03 OCT 2026 · 149 FOTOS</small></span>
+        </button>
+      </nav>
       <button id="insertTape" class="vcr-machine" type="button" aria-label="Insertar VHS y ver las fotos">
         <div class="machine-topline">
           <span>BACK TO THE 80s · VIDEO CASSETTE</span>
@@ -37,7 +47,7 @@
         </div>
 
         <div class="machine-controls">
-          <div class="archive-label"><b>05·09·2026</b><span>205 FOTOS · TEATRO VORTERIX</span></div>
+          <div class="archive-label"><b id="archiveDate">05·09·2026</b><span id="archiveCount">205 FOTOS · TEATRO VORTERIX</span></div>
           <div id="playControl" class="play-control">▶ TOCÁ EL VIDEOCASSETTE</div>
         </div>
 
